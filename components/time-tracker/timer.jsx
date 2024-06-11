@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
 import { formatTimeWithColon } from '@/utils/time'
 
-export default function Timer ({ onTimeStop }) {
+export default function Timer ({ onTimeStop, projects }) {
   const [isActive, setIsActive] = useState(false)
   const [time, setTime] = useState(0)
   const [startTime, setStartTime] = useState(null)
   const [description, setDescription] = useState('')
+  const [selectedProject, setSelectedProject] = useState('')
 
   useEffect(() => {
     let interval = null
@@ -22,14 +23,15 @@ export default function Timer ({ onTimeStop }) {
         date: startTime.toLocaleDateString(),
         startTime: startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         endTime: endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        description: description
+        description: description,
+        project: selectedProject
       })
       setTime(0)
       setStartTime(null)
       setDescription('')
     }
     return () => clearInterval(interval)
-  }, [isActive, time, onTimeStop, startTime, description])
+  }, [isActive, time, onTimeStop, startTime, description, selectedProject])
 
   const handleButtonClick = () => {
     if (!isActive) setStartTime(new Date())
@@ -48,6 +50,16 @@ export default function Timer ({ onTimeStop }) {
         onChange={(e) => setDescription(e.target.value)}
         className="mb-4 px-4 py-2 border rounded"
       />
+      <select
+        value={selectedProject}
+        onChange={(e) => setSelectedProject(e.target.value)}
+        className="mb-4 px-4 py-2 border rounded"
+      >
+        <option value="">Selecciona un proyecto</option>
+        {projects.map((project) => (
+          <option key={project.id} value={project.name}>{project.name}</option>
+        ))}
+      </select>
       <button
         className={`px-6 py-3 rounded text-white ${isActive ? 'bg-red-500' : 'bg-green-500'}`}
         onClick={handleButtonClick}
