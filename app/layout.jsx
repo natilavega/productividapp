@@ -1,7 +1,17 @@
-import { Inter } from "next/font/google"
-import "./globals.css"
+import { Manrope, Inconsolata } from 'next/font/google'
+import './globals.css'
 
-const inter = Inter({ subsets: ["latin"] })
+const manrope = Manrope({
+  subsets: ['latin'],
+  variable: '--font-manrope',
+  display: 'swap',
+})
+
+const inconsolata = Inconsolata({
+  subsets: ['latin'],
+  variable: '--font-inconsolata',
+  display: 'swap',
+})
 
 export const metadata = {
   title: "Productividapp",
@@ -11,7 +21,9 @@ export const metadata = {
 export default function RootLayout ({ children }) {
   return (
     <html lang="es">
-      <body className={inter.className}>{children}</body>
+      <body className={`${manrope.variable} ${inconsolata.variable} font-sans`}>
+        {children}
+      </body>
     </html>
   )
 }

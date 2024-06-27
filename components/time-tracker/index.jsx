@@ -26,11 +26,9 @@ export default function TimeTracker () {
   }
 
   return (
-    <div className="flex flex-col items-center min-h-screen pt-40 bg-gray-100">
+    <div className="flex flex-col gap-16 bg-gray-100 min-h-screen py-10 px-5">
       <Timer onTimeStop={handleTimeStop} projects={mockProjects} />
-      {trackedTimes.length > 0 && (
-        <TrackedTimes trackedTimes={trackedTimes} projects={mockProjects} />
-      )}
+      <TrackedTimes trackedTimes={trackedTimes} projects={mockProjects} />
     </div>
   )
 }
